@@ -1,0 +1,37 @@
+import pl.droidsonroids.domainnameutils.TldListGenerator
+
+apply plugin: 'com.android.application'
+
+def generatedSrcDir = "${buildDir}/generated/src/main/java/"
+
+android {
+    compileSdkVersion 22
+    buildToolsVersion "22.0.1"
+
+    defaultConfig {
+        applicationId "pl.droidsonroids.buildsrcsample"
+        minSdkVersion 15
+        targetSdkVersion 22
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    sourceSets {
+        main {
+            java {
+                srcDirs += generatedSrcDir
+            }
+        }
+    }
+}
+
+task generateTld << {
+    TldListGenerator.generateTldListClass(generatedSrcDir, true)
+}
+
+preBuild.dependsOn generateTld

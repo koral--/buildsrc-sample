@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">BuildSrcSample</string>
+    <string name="spinner_tld_label">List of all TLDs</string>
+</resources>
