@@ -2,9 +2,23 @@ import pl.droidsonroids.domainnameutils.TldListGenerator
 
 apply plugin: 'com.android.application'
 
-def generatedSrcDir = "${buildDir}/generated/src/main/java/"
+def generatedSrcDir = new File(buildDir, "generated/tld/src/main/java/")
+
+task generateTld << {
+    TldListGenerator.generateTldListClass(generatedSrcDir, true)
+}
+
+preBuild.dependsOn generateTld
 
 android {
+    sourceSets {
+        main {
+            java {
+                srcDirs += generatedSrcDir
+            }
+        }
+    }
+
     compileSdkVersion 22
     buildToolsVersion "22.0.1"
 
@@ -21,17 +35,4 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    sourceSets {
-        main {
-            java {
-                srcDirs += generatedSrcDir
-            }
-        }
-    }
 }
-
-task generateTld << {
-    TldListGenerator.generateTldListClass(generatedSrcDir, true)
-}
-
-preBuild.dependsOn generateTld

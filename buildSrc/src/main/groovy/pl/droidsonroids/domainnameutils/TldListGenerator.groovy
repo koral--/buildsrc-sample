@@ -16,7 +16,7 @@ public class TldListGenerator {
      * @param useSavedVersion if true then saved TLD data will be used instead of downloading it
      * from IANA's website
      */
-    public static void generateTldListClass(final String outputDir, final boolean useSavedVersion) {
+    public static void generateTldListClass(final File outputDir, final boolean useSavedVersion) {
         def javadocConfig = new ConfigSlurper()
                 .parse(TldListGenerator.class.getResource('javadoc.properties'))
         def sourceUrl = useSavedVersion ?
@@ -56,10 +56,9 @@ public class TldListGenerator {
         method.body()._return(field)
         tldListClass.constructor(PRIVATE)
 
-        def outputFile = new File(outputDir)
-        if (!outputFile.isDirectory() && !outputFile.mkdirs()) {
+        if (!outputDir.isDirectory() && !outputDir.mkdirs()) {
             throw new IOException('Could not create directory: ' + outputDir)
         }
-        codeModel.build(outputFile)
+        codeModel.build(outputDir)
     }
 }

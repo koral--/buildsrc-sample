@@ -20,7 +20,7 @@ public class TldListGeneratorTest {
     @Test
     public void testGenerator() {
         def outputDir = tempFolder.newFolder()
-        TldListGenerator.generateTldListClass(outputDir.getPath(), true)
+        TldListGenerator.generateTldListClass(outputDir, true)
         def generatedFile = new File(outputDir, 'pl/droidsonroids/domainnameutils/TldList.java')
         assertTrue(generatedFile.isFile())
     }
