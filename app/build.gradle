@@ -4,11 +4,11 @@ apply plugin: 'com.android.application'
 
 def generatedSrcDir = new File(buildDir, "generated/tld/src/main/java/")
 
-task generateTld << {
+task generateTldList << {
     TldListGenerator.generateTldListClass(generatedSrcDir, true)
 }
 
-preBuild.dependsOn generateTld
+preBuild.dependsOn generateTldList
 
 android {
     sourceSets {
